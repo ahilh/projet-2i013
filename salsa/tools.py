@@ -10,7 +10,7 @@ from soccersimulator import Simulation, SoccerTeam, Player, show_simu
 from soccersimulator import Strategy
 from soccersimulator import settings
 import math
-from tools import *
+#from tools import *
 
 class SuperState ( object ):
     def __init__ ( self , state , id_team , id_player ):
