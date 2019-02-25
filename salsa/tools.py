@@ -98,18 +98,17 @@ class SuperState ( object ):
     @property
     def slow_shoot_to_goal(self):
         speed = self.goal - self.player
-        return SoccerAction(acceleration=None, shoot=speed.normalize()*0.2)
+        return SoccerAction(acceleration=None, shoot=speed.normalize()*5)
     
     @property
     def fast_shoot_to_goal(self): 
         speed = self.goal - self.player
-        return SoccerAction(acceleration=None, shoot=speed.normalize()*2.5)
+        return SoccerAction(acceleration=None, shoot=speed.normalize()*20)
     
     @property
     def fast_shoot_to_near_player(self): 
         speed = self.nearest_player_position-self.player
-        print(speed)
-        return SoccerAction(acceleration=None, shoot=speed.normalize()*2.5)    
+        return SoccerAction(acceleration=None, shoot=speed.normalize()*30)    
     
     @property
     def ball_zone_defense_player(self): #zone de defense

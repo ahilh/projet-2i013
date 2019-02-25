@@ -21,7 +21,7 @@ class Attaquant (Strategy):
     def compute_strategy(self,state,id_team,id_player): 
         s=SuperState( state , id_team , id_player )
         if s.ConditionToShoot==True:
-            return s.shoot_to_goal
+            return s.slow_shoot_to_goal
         if s.ball_zone_defense_player==True and s.id_team==1:
             dir = s.ball - s.player
             dir.x = settings.GAME_WIDTH/4 - s.player.x
