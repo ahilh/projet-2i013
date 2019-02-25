@@ -47,9 +47,6 @@ class Defense(Strategy):
                 return fastshoot
         if (s.ball_zone_defense_player== True):
             return gotoball
-        if (s.ConditionToShoot==True) :
-            if(s.zone_attack_opponent==True):
-                return fastshoot
         else:
             dir = s.ball - s.player
             dir.x = 0
