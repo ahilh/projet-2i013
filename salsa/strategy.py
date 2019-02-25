@@ -14,27 +14,43 @@ from .tools import SuperState
 import math
 
 
-class GoStrategy (Strategy):
+class Attaquant (Strategy):
     def __init__(self) :
         Strategy.__init__(self,"Go−getter ")
         
     def compute_strategy(self,state,id_team,id_player): 
         s=SuperState( state , id_team , id_player )
-        if s.dist_ball < settings.PLAYER_RADIUS + settings.BALL_RADIUS:
+        if s.ConditionToShoot==True:
             return s.shoot_to_goal
+        if s.ball_zone_defense_player==True and s.id_team==1:
+            dir = s.ball - s.player
+            dir.x = settings.GAME_WIDTH/4 - s.player.x
+            return SoccerAction(acceleration=dir)
+        elif s.ball_zone_defense_player==True and s.id_team==2:
+            dir = s.ball - s.player
+            dir.x = settings.GAME_WIDTH*3./4 - s.player.x
+            return SoccerAction(acceleration=dir)
         else:
             return s.gotoball
 
 
-class defense(Strategy):
-    def __init__(self) :
+class Defense(Strategy):
+    def __init__(self) :                                                  
         Strategy.__init__(self,"Defenseur")
         
     def compute_strategy(self,state,id_team,id_player): 
         s=SuperState( state , id_team , id_player )
-        if ( s.dist_ball < settings.PLAYER_RADIUS + settings.BALL_RADIUS):
-            return s.shoot_to_goal
-        elif (s.zone_defenseur == True):
-            return s.gotoball
+        fastshoot = s.fast_shoot_to_near_player
+        gotoball= s.gotoball
+        if (s.ConditionToShoot==True) :
+            if(s.zone_attack_opponent==True):
+                return fastshoot
+        if (s.ball_zone_defense_player== True):
+            return gotoball
+        if (s.ConditionToShoot==True) :
+            if(s.zone_attack_opponent==True):
+                return fastshoot
         else:
-            return SoccerAction()
+            dir = s.ball - s.player
+            dir.x = 0
+            return SoccerAction(acceleration=dir)
